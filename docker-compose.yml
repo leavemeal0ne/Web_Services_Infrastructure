@@ -1,0 +1,46 @@
+version: '3.9'
+services:
+  postgres_db:
+    container_name: ${CONTAINER_NAME}
+    image: postgres:16-alpine
+    env_file:
+      - configs/db.env
+    volumes:
+      - lab4_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  app:
+    build:
+      dockerfile: dockerfiles/Dockerfile
+      context: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres_db:
+        condition: service_healthy
+    restart: on-failure
+  migrate:
+    env_file:
+      - configs/db.env
+    image: migrate/migrate:latest
+#    profiles: [ "tools" ]
+    volumes:
+      - ./migrations:/migrations
+    entrypoint:
+      [
+        "migrate",
+        "-path",
+        "/migrations",
+        "-database",
+        "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${CONTAINER_NAME}/${POSTGRES_DB}?sslmode=disable",
+      ]
+    command: [ "up" ]
+    depends_on:
+      postgres_db:
+        condition: service_healthy
+    restart: on-failure
+volumes:
+  lab4_db_data:
