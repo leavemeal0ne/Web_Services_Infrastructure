@@ -1,0 +1,95 @@
+<div class = "table_body">
+    <br>
+    <h1>Клієнти</h1>  
+    <div style="text-align: right;">
+    <button id="addRowButton" (click)="addRowPlaceholder()" class="add-button">Додати новий запис</button>
+    <div id = "addRowTable" style = "display: none; margin-top: 7px; margin-bottom: 7px;">
+      <table>
+        <tr style="background-color: rgba(60, 87, 107, 0.2)">
+          <td>
+            <input id="addRowId" placeholder="ID" type="number" value="-" readonly style="display: none;">
+            Заповніть поля для нового запису
+          </td>  
+          <td>
+            <input id="addRowFullName" placeholder="Повне ім'я" type="text" style="width: 270px;">
+          </td>  
+          <td>
+            <input id="addRowAge" placeholder="Вік" type="number" style="width: 35px;">
+          </td>  
+          <td>
+            <select id="addRowSex">
+              <option value="male">чоловік</option>
+              <option value="female">жінка</option>
+            </select>
+          </td> 
+          <td>
+            <button (click)="addRow()" class="edit-buttons" style="background-color: rgba(3, 140, 10, 0.2)">
+              <img src="../../assets/add.png" style="width: 20px; height: 20px;">
+            </button>
+            <button (click)="closeAddRowPlaceholder()" class="edit-buttons" style="background-color: rgba(82, 7, 15, 0.2)">
+              <img src="../../assets/x-mark.png" style="width: 20px; height: 20px;">
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="tbl-content">
+      <table>  
+        <thead>  
+            <tr style="background-color: rgba(0, 0, 0, 0.5)">  
+              <th>ID</th>  
+              <th>Повне ім'я</th>  
+              <th>Вік</th>  
+              <th>Стать</th>  
+              <th>Дії</th>
+            </tr>  
+        </thead>  
+        <tbody *ngFor="let client of clients">  
+            <tr>  
+              <td>{{ client.id }}</td>  
+              <td>{{ client.full_name }}</td>  
+              <td>{{ client.age }}</td>  
+              <td>
+                {{ client.sex === 'male' ? 'чоловік' : 'жінка' }}
+              </td> 
+              <td>
+                <div id="edit-buttons{{client.id}}">
+                    <button (click)="addEditRow(client)" class="edit-buttons">
+                      <img src="../../assets/edit.png" style="width: 20px; height: 20px;">
+                    </button>
+                    <button (click)="deleteRow(client)" class="edit-buttons">
+                      <img src="../../assets/delete.png" style="width: 20px; height: 20px;">
+                    </button>
+                </div>
+              </td>
+            </tr>
+            <tr id="edit{{client.id}}" style="background-color: rgba(0, 0, 0, 0.5); display: none;" class = "table_body">  
+              <td>
+                <input id="id{{client.id}}" type="number" readonly style="display: none;">
+              </td>  
+              <td>
+                <input id="full_name{{client.id}}" class="text" style="width: 270px;">
+              </td>  
+              <td>
+                <input id="age{{client.id}}" type="number" style="width: 35px;">
+              </td>  
+              <td>
+                <select id="sex{{client.id}}">
+                    <option value="male">чоловік</option>
+                    <option value="female">жінка</option>
+                  </select>
+              </td> 
+              <td>
+                <button (click)="approveEditRow(client)" class="edit-buttons" style="background-color: rgba(3, 140, 10, 0.2)">
+                  <img src="../../assets/checkmark.png" style="width: 20px; height: 20px;">
+                </button>
+                <button (click)="closeEditRow(client)" class="edit-buttons" style="background-color: rgba(82, 7, 15, 0.2)">
+                  <img src="../../assets/x-mark.png" style="width: 20px; height: 20px;">
+                </button>
+              </td>
+            </tr>
+        </tbody>  
+      </table>  
+    </div>
+  </div>
+  </div>

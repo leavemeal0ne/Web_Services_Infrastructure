@@ -1,0 +1,29 @@
+<div class = "table_body" style="padding-bottom: 50px;">
+  <br>
+      <h1>Відділ кадрів</h1>
+<div class="tbl-content">
+    <table>  
+      <thead>  
+          <tr style="background-color: rgba(0, 0, 0, 0.5)">  
+            <th>ID</th>  
+            <th>Повне ім'я</th>  
+            <th>ID посади</th>
+            <th>Назва посади
+            </th> 
+            <th>Зарплата</th>
+            <th>Опис посади</th> 
+          </tr>  
+      </thead>  
+      <tbody *ngFor="let worker of workers; let i = index">  
+          <tr>  
+            <td>{{ worker.id }}</td>  
+            <td>{{ worker.full_name }}</td>  
+            <td>{{ worker.position_id }}</td>
+            <td *ngFor="let position of positions" [hidden]="worker.position_id != position.id">{{ position.title }}</td>
+            <td *ngFor="let position of positions" [hidden]="worker.position_id != position.id">{{ position.salary }}</td>
+            <td *ngFor="let position of positions" [hidden]="worker.position_id != position.id">{{ position.description }}</td>
+          </tr>
+      </tbody>  
+    </table>  
+  </div>
+</div>

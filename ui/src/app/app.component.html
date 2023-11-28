@@ -1,0 +1,13 @@
+<app-clients-table></app-clients-table>
+<app-workers-table
+[position_ids]="position_ids"
+(workers_change)="onWorkers($event)"
+></app-workers-table>
+<app-positions-table
+[worker_position_ids]="worker_position_ids"
+(positions_change)="onPositions($event)"
+></app-positions-table>
+<app-personnel-department-table
+[positions]="positions"
+[workers]="workers"
+></app-personnel-department-table>

@@ -1,0 +1,87 @@
+<div class = "table_body" style="padding-bottom: 50px;">
+    <br>
+    <h1>Посади</h1>  
+    <div style="text-align: right;">
+    <button id="addRowButton3" (click)="addRowPlaceholder()" class="add-button">Додати новий запис</button>
+    <div id = "addRowTable3" style = "display: none; margin-top: 7px; margin-bottom: 7px;">
+      <table>
+        <tr style="background-color: rgba(60, 87, 107, 0.2)">
+          <td>
+            <input id="addRowId3" placeholder="ID" type="number" value="-" readonly style="display: none;">
+            Заповніть поля для нового запису
+          </td>  
+          <td>
+            <input id="addRowTitle3" placeholder="Назва посади" class="text" style="width: 270px;">
+          </td>  
+          <td>
+            <input id="addRowSalary3" placeholder="Зарплата" type="number" style="width: 100px;">
+          </td>  
+          <td>
+            <textarea id="addRowDescription3" placeholder="Опис посади" class="text" style="width: 270px; height: 50px;"></textarea>
+          </td> 
+          <td>
+            <button (click)="addRow()" class="edit-buttons" style="background-color: rgba(3, 140, 10, 0.2)">
+              <img src="../../assets/add.png" style="width: 20px; height: 20px;">
+            </button>
+            <button (click)="closeAddRowPlaceholder()" class="edit-buttons" style="background-color: rgba(82, 7, 15, 0.2)">
+              <img src="../../assets/x-mark.png" style="width: 20px; height: 20px;">
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="tbl-content">
+      <table>  
+        <thead>  
+            <tr style="background-color: rgba(0, 0, 0, 0.5)">  
+              <th>ID</th>  
+              <th>Назва посади</th>  
+              <th>Зарплата</th>  
+              <th>Опис посади</th>  
+              <th>Дії</th>
+            </tr>  
+        </thead>  
+        <tbody *ngFor="let position of positions">  
+            <tr>  
+              <td>{{ position.id }}</td>  
+              <td>{{ position.title }}</td>
+              <td>{{ position.salary }}</td>
+              <td>{{ position.description }}</td>
+              <td>
+                <div id="edit-buttons3{{position.id}}">
+                    <button (click)="addEditRow(position)" class="edit-buttons">
+                      <img src="../../assets/edit.png" style="width: 20px; height: 20px;">
+                    </button>
+                    <button (click)="deleteRow(position)" class="edit-buttons">
+                      <img src="../../assets/delete.png" style="width: 20px; height: 20px;">
+                    </button>
+                </div>
+              </td>
+            </tr>
+            <tr id="edit3{{position.id}}" style="background-color: rgba(0, 0, 0, 0.5); display: none;" class = "table_body">  
+              <td>
+                <input id="id3{{position.id}}" type="number" readonly style="display: none;">
+              </td>  
+                <td>
+                    <input id="title3{{position.id}}" class="text" style="width: 270px;">
+                </td>
+                <td>
+                    <input id="salary3{{position.id}}" type="number" style="width: 100px;">
+                </td>
+                <td>
+                    <textarea id="description3{{position.id}}" class="text" style="width: 100%; height: 50px;"></textarea>
+                </td>
+              <td>
+                <button (click)="approveEditRow(position)" class="edit-buttons" style="background-color: rgba(3, 140, 10, 0.2)">
+                  <img src="../../assets/checkmark.png" style="width: 20px; height: 20px;">
+                </button>
+                <button (click)="closeEditRow(position)" class="edit-buttons" style="background-color: rgba(82, 7, 15, 0.2)">
+                  <img src="../../assets/x-mark.png" style="width: 20px; height: 20px;">
+                </button>
+              </td>
+            </tr>
+        </tbody>  
+      </table>  
+    </div>
+  </div>
+  </div>
