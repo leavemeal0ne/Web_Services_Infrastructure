@@ -10,8 +10,8 @@ docker-compose --env-file .\configs\db.env  up
 ```
 docker-compose down 
 ```
-##Application
-http://localhost
+## Application
+Link: http://localhost
 
 
 ## endpoints
