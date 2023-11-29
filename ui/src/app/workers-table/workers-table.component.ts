@@ -104,8 +104,8 @@ export class WorkersTableComponent {
     }
 
     const new_worker = {
-      "full_name": new_name, 
-      "age": new_age, 
+      "full_name": new_name,
+      "age": new_age,
       "sex": new_sex,
       "position_id": new_position_id
     };
@@ -194,7 +194,7 @@ export class WorkersTableComponent {
       alert("Вік повинен бути від 18 до 120 років");
       return;
     }
-    
+
     if (worker.full_name==new_full_name&&worker.age==new_age&&worker.sex==new_sex&&worker.position_id==new_position_id){
       alert("Дані не змінилися");
       return;

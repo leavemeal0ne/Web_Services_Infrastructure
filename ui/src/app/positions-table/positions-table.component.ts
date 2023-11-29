@@ -189,7 +189,7 @@ export class PositionsTableComponent {
       alert("Зарплата повинна бути більше 0");
       return;
     }
-    
+
     if (new_description.length < 6 || new_description.length > 1000) {
       alert("Опис повинен містити від 6 до 1000 символів");
       return;

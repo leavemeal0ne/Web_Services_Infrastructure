@@ -87,8 +87,8 @@ export class ClientsTableComponent {
     }
 
     const new_client = {
-      "full_name": new_name, 
-      "age": new_age, 
+      "full_name": new_name,
+      "age": new_age,
       "sex": new_sex};
     this.addData(new_client);
 
@@ -169,7 +169,7 @@ export class ClientsTableComponent {
       alert("Вік повинен бути від 18 до 120 років");
       return;
     }
-    
+
     if (client.full_name==new_full_name&&client.age==new_age&&client.sex==new_sex){
       alert("Дані не змінилися");
       return;

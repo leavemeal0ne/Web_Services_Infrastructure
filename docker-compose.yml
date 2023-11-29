@@ -13,6 +13,7 @@ services:
       timeout: 5s
       retries: 5
   app:
+    container_name: app
     build:
       dockerfile: dockerfiles/Dockerfile
       context: .
@@ -22,7 +23,6 @@ services:
       postgres_db:
         condition: service_healthy
     restart: on-failure
-    
   migrate:
     env_file:
       - configs/db.env
@@ -43,15 +43,14 @@ services:
       postgres_db:
         condition: service_healthy
     restart: on-failure
-    
   frontend:
     build: ./ui
     container_name: frontend
+    restart: on-failure
     ports:
       - "80:80"
     depends_on:
-      postgres_db:
-        condition: service_healthy
+      - app
     
 volumes:
   lab4_db_data:
