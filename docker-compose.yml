@@ -22,6 +22,8 @@ services:
     depends_on:
       postgres_db:
         condition: service_healthy
+      mongo:
+        condition: service_started
     restart: on-failure
   migrate:
     env_file:
@@ -51,6 +53,25 @@ services:
       - "80:80"
     depends_on:
       - app
-    
+  mongo:
+    image: mongo:7.0.4
+    container_name: mongodb
+    restart: on-failure
+    env_file:
+      - configs/db.env
+    volumes:
+      - lab4_mongodb_data:/data/db
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    restart: on-failure
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      ME_CONFIG_MONGODB_SERVER: mongodb
+
 volumes:
   lab4_db_data:
+  lab4_mongodb_data:

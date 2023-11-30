@@ -5,6 +5,7 @@ import (
 	_ "github.com/lib/pq"
 	"lab4/internal/handler"
 	"lab4/internal/repository"
+	"lab4/internal/repository/mongoDB"
 	"lab4/internal/repository/postgres"
 	"lab4/internal/service"
 	"log"
@@ -33,7 +34,19 @@ func main() {
 		log.Fatal("FAILED TO CREATE DB INSTANCE", err)
 	}
 
-	repo := repository.NewPostgresRepository(db)
+	mongoConfig := mongoDB.MongoConfig{
+		User:       os.Getenv("MONGO_INITDB_ROOT_USERNAME"),
+		Password:   os.Getenv("MONGO_INITDB_ROOT_PASSWORD"),
+		DB:         "lab_4",
+		Collection: "logs",
+	}
+
+	mongo, err := mongoDB.Mongo(mongoConfig)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	repo := repository.NewPostgresRepository(db, mongo)
 	srvc := service.NewService(repo)
 	mux := handler.NewHandler(srvc).InitRoutes()
 

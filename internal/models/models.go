@@ -35,3 +35,9 @@ type Position struct {
 func (w *Position) Validate() error {
 	return validator.New(validator.WithRequiredStructEnabled()).Struct(w)
 }
+
+type LogData struct {
+	IP     string
+	Method string
+	URI    string
+}

@@ -2,7 +2,9 @@ package repository
 
 import (
 	"github.com/jmoiron/sqlx"
+	"go.mongodb.org/mongo-driver/mongo"
 	"lab4/internal/models"
+	"lab4/internal/repository/mongoDB/logs"
 	repositoryclients "lab4/internal/repository/postgres/clients"
 	repositorypositions "lab4/internal/repository/postgres/positions"
 	repositoryworkers "lab4/internal/repository/postgres/workers"
@@ -32,20 +34,26 @@ type TodoPositions interface {
 	DeletePosition(position *models.Position) error
 }
 
+type MongoDBLog interface {
+	InsertLog(data models.LogData) error
+}
+
 type Repository struct {
 	TodoClients
 	TodoWorkers
 	TodoPositions
+	MongoDBLog
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{}
 }
 
-func NewPostgresRepository(db *sqlx.DB) *Repository {
+func NewPostgresRepository(db *sqlx.DB, collection *mongo.Collection) *Repository {
 	return &Repository{
 		TodoClients:   repositoryclients.NewClientsPostgres(db),
 		TodoWorkers:   repositoryworkers.NewWorkersPostgres(db),
 		TodoPositions: repositorypositions.NewPositionsPostgres(db),
+		MongoDBLog:    repositorylogs.NewLogsMongo(collection),
 	}
 }
