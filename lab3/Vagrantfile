@@ -1,0 +1,13 @@
+
+Vagrant.configure("2") do |config|
+
+    config.vm.define "lab3" do |lab3|
+        lab3.vm.box = "bento/ubuntu-20.04"
+        lab3.vm.hostname = "LAMA"
+        lab3.vm.network "forwarded_port", guest: 80, host: 8080, id: "nginx"
+        lab3.vm.provider "virtualbox" do |vb|
+            vb.cpus = 2
+        end
+        lab3.vm.provision "shell", path: "nginx.sh"
+    end
+end
